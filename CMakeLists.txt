@@ -141,6 +141,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${ZLIB_INCLUDE_DIR})
 
 if(PNG_SHARED)
   add_library(${PNG_LIB_NAME} SHARED ${libpng_sources})
+  SET_PROPERTY(TARGET ${PNG_LIB_NAME} PROPERTY FOLDER "libpng")
   if(MSVC)
     # msvc does not append 'lib' - do it here to have consistent name
     set_target_properties(${PNG_LIB_NAME} PROPERTIES PREFIX "lib")
@@ -168,6 +169,7 @@ if(PNG_TESTS AND PNG_SHARED)
   # does not work with msvc due to png_lib_ver issue
   add_executable(pngtest ${pngtest_sources})
   target_link_libraries(pngtest ${PNG_LIB_NAME})
+  SET_PROPERTY(TARGET pngtest PROPERTY FOLDER "libpng")
   #TS_GATEWAY: test command adjusted, as for zlib so the test runner works for us.
   add_test(NAME pngtest COMMAND pngtest ${CMAKE_CURRENT_SOURCE_DIR}/pngtest.png)
   #
@@ -175,6 +177,7 @@ if(PNG_TESTS AND PNG_SHARED)
   target_link_libraries(pngvalid ${PNG_LIB_NAME})
   #TS_GATEWAY: test command adjusted, as for zlib so the test runner works for us.
   add_test(NAME pngvalid COMMAND pngvalid)
+  SET_PROPERTY(TARGET pngvalid PROPERTY FOLDER "libpng")
 endif()
 
 # Ensure the CMAKE_LIBRARY_OUTPUT_DIRECTORY is set
